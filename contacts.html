@@ -66,10 +66,16 @@
         <p class="sub">Коротко опиши ситуацію — ми зв'яжемось з тобою для першої розмови.</p>
 
         <!-- Форма HubSpot: заявки автоматично потрапляють у безкоштовну CRM -->
-        <div class="hs-form-wrapper">
-          <script src="https://js-eu1.hsforms.net/forms/embed/149105346.js" defer></script>
-          <div class="hs-form-frame" data-region="eu1" data-form-id="5bd3ec89-a999-4a38-92ec-be3fa40ca12e" data-portal-id="149105346"></div>
-        </div>
+        <div class="hs-form-wrapper" id="hubspot-form-target"></div>
+        <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
+        <script>
+          hbspt.forms.create({
+            portalId: "149105346",
+            formId: "5bd3ec89-a999-4a38-92ec-be3fa40ca12e",
+            region: "eu1",
+            target: "#hubspot-form-target"
+          });
+        </script>
 
         <p class="form-note">Надсилаючи форму, ти погоджуєшся на обробку персональних даних відповідно до політики конфіденційності.</p>
       </div>
