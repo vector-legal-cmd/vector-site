@@ -11,6 +11,43 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  .price-tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+  .price-tag .amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .price-tag .unit {
+    font-size: 14px;
+    color: rgba(33,29,27,0.55);
+  }
+  .price-note {
+    font-size: 13px;
+    color: rgba(33,29,27,0.5);
+    margin-bottom: 16px;
+  }
+  .pay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--wine);
+    color: var(--cream-text);
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .pay-btn:hover { background: var(--wine-dark); transform: translateY(-1px); }
+</style>
 </head>
 <body>
 
@@ -53,6 +90,9 @@
           <li>Оформлення опіки та графіку участі в вихованні дітей</li>
           <li>Справедливий розподіл спільного майна та бізнесу</li>
         </ul>
+        <div class="price-tag"><span class="amount">від 15 000 ₴</span><span class="unit">/ справа</span></div>
+        <p class="price-note">Тестова ціна — уточнюється індивідуально залежно від складності справи.</p>
+        <a href="contacts.html" class="pay-btn">Оплатити консультацію →</a>
       </div>
     </div>
 
@@ -69,6 +109,9 @@
           <li>Підготовка до складних розмов із партнером</li>
           <li>Адаптація дітей до нових умов життя</li>
         </ul>
+        <div class="price-tag"><span class="amount">800 ₴</span><span class="unit">/ сесія</span></div>
+        <p class="price-note">Тестова ціна — буде уточнено.</p>
+        <a href="contacts.html" class="pay-btn">Оплатити сесію →</a>
       </div>
     </div>
 
@@ -85,6 +128,9 @@
           <li>Як убезпечити спільні рахунки та майно</li>
           <li>Перший контакт з юристом протягом дня звернення</li>
         </ul>
+        <div class="price-tag"><span class="amount">2 500 ₴</span><span class="unit">/ консультація</span></div>
+        <p class="price-note">Тестова ціна — буде уточнено.</p>
+        <a href="contacts.html" class="pay-btn">Оплатити консультацію →</a>
       </div>
     </div>
 
@@ -125,7 +171,6 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 Вектор.</span>
-      <span>Конфіденційно. Без засудження.</span>
       <span><a href="privacy-policy.html">Політика конфіденційності</a></span>
     </div>
   </div>
