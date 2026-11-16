@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тести — Вектор</title>
+<meta name="description" content="Короткі тести про розлучення: перевір себе й отримай підказку, з чого почати.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap');
+:root{--ink:#211d1b;--wine:#74293b;--wine-dark:#5a1f2e;--sage:#7c8b70;--sand:#f3ece1}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--wine);color:var(--sand);font-family:'Inter',Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px 48px}
+.logo{font-family:'Playfair Display',Georgia,serif;font-size:26px;letter-spacing:.04em;margin:8px 0 24px;color:var(--sand);text-decoration:none}
+.card{width:100%;max-width:640px;background:var(--wine-dark);border-radius:4px;padding:36px 32px}
+h1,h2{font-family:'Playfair Display',Georgia,serif;font-weight:500;line-height:1.2}
+h1{font-size:34px;margin-bottom:14px}h2{font-size:26px;margin-bottom:22px}
+p{line-height:1.6;color:rgba(243,236,225,.85)}
+.btn{display:inline-block;margin-top:22px;background:var(--sand);color:var(--wine);border:0;padding:14px 26px;font:600 15px 'Inter';border-radius:3px;cursor:pointer;text-decoration:none}
+.btn:hover{background:#fff}.btn.ghost{background:transparent;color:var(--sand);border:1px solid rgba(243,236,225,.4)}
+.opt{display:block;width:100%;text-align:left;margin-top:12px;padding:15px 18px;background:transparent;color:var(--sand);border:1px solid rgba(243,236,225,.3);border-radius:3px;font:500 16px 'Inter';cursor:pointer;transition:.2s}
+.opt:hover{border-color:var(--sand);background:rgba(243,236,225,.06)}
+.opt.ok{border-color:var(--sage);background:rgba(124,139,112,.3)}.opt.bad{border-color:#c9786f;background:rgba(201,120,111,.2)}
+.bar{height:4px;background:rgba(243,236,225,.15);border-radius:2px;margin-bottom:26px}.bar i{display:block;height:100%;background:var(--sage);border-radius:2px;transition:width .3s}
+.meta{font-size:13px;color:rgba(243,236,225,.6);margin-bottom:10px}
+.explain{margin-top:18px;padding:14px 16px;border-left:3px solid var(--sage);background:rgba(243,236,225,.05);font-size:15px}
+.score{font-family:'Playfair Display',Georgia,serif;font-size:56px;margin:6px 0 10px}
+.note{font-size:12.5px;color:rgba(243,236,225,.55);margin-top:26px}
+.list{margin-top:18px}.list .opt{margin-top:10px}
+form input,form textarea{width:100%;margin-top:10px;padding:13px 14px;background:rgba(243,236,225,.08);border:1px solid rgba(243,236,225,.3);border-radius:3px;color:var(--sand);font:16px 'Inter'}
+form input::placeholder{color:rgba(243,236,225,.5)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="logo">Вектор</div>
+<div class="card" id="app"></div>
+
+<script>
+/* ============ КОНСТРУКТОР: редагуйте лише цей блок ============ */
+var SITE_LINK = "https://www.vectorr.com.ua/contacts.html";          // куди веде кнопка «Записатися»
+var WEB3FORMS_KEY = "33d1079c-cb4d-48e0-b1f0-724d064cd70f"; // ключ форми (можна залишити)
+var TESTS = [
+  {
+    id: "ready", type: "score",
+    title: "Чи ти готова до розлучення?",
+    intro: "5 запитань, 1 хвилина. Це не діагноз, а орієнтир, з чого почати.",
+    questions: [
+      {q: "Чи знаєш ти, де лежать твої документи й документи на майно?", a: [["Так", 2], ["Частково", 1], ["Ні", 0]]},
+      {q: "Чи знаєш ти приблизно сімейний бюджет?", a: [["Так", 2], ["Приблизно", 1], ["Ні", 0]]},
+      {q: "Чи є в тебе особиста фінансова подушка?", a: [["Так", 2], ["Невелика", 1], ["Ні", 0]]},
+      {q: "Чи є поруч людина, з якою можна відверто поговорити?", a: [["Так", 2], ["Не зовсім", 1], ["Ні", 0]]},
+      {q: "Чи розумієш ти, що чекає тебе юридично?", a: [["Так", 2], ["Загальне уявлення", 1], ["Ні", 0]]}
+    ],
+    results: [
+      {min: 8, title: "Ти добре підготовлена", text: "База є. Лишається скласти чіткий план і перевірити деталі з фахівцем."},
+      {min: 4, title: "Основа є, є прогалини", text: "Варто закрити питання з документами, бюджетом і підтримкою. Допоможемо скласти план."},
+      {min: 0, title: "Ти не одна, почни з розмови", text: "Це нормально, що багато чого невідомо. Перша консультація допоможе зорієнтуватись без тиску."}
+    ]
+  },
+  {
+    id: "myth", type: "quiz",
+    title: "Міф чи правда: розлучення",
+    intro: "5 запитань із поясненнями. Загальна інформація, не юридична порада.",
+    questions: [
+      {q: "Усе майно, нажите в шлюбі, завжди ділиться навпіл автоматично.", a: ["Правда", "Міф"], correct: 1, why: "Частки зазвичай рівні, але за домовленістю або рішенням суду можуть бути іншими. Усе залежить від обставин."},
+      {q: "Розлучитися можна, навіть якщо чоловік проти.", a: ["Правда", "Міф"], correct: 0, why: "Без згоди другої сторони розлучення відбувається через суд. Суд може запропонувати час на примирення."},
+      {q: "Якщо є неповнолітня дитина, розлучення зазвичай відбувається через суд.", a: ["Правда", "Міф"], correct: 0, why: "Як правило, так. Є нюанси, тож уточнюй у юриста."},
+      {q: "Подарунок, отриманий особисто одним із подружжя, є спільним майном.", a: ["Правда", "Міф"], correct: 1, why: "Майно, отримане в дар, зазвичай вважається особистим тієї, кому його подарували."},
+      {q: "Найкращий перший крок: швидко підписати все, щоб закінчити.", a: ["Правда", "Міф"], correct: 1, why: "Спершу варто зібрати документи й оцінити бюджет. Не підписуй те, чого не розумієш."}
+    ],
+    results: [
+      {min: 4, title: "Ти добре орієнтуєшся", text: "Чудово! Для індивідуальної ситуації все одно краще звірити деталі."},
+      {min: 2, title: "Непогано, є що уточнити", text: "Частина міфів досі популярна. Розберемо твою ситуацію на консультації."},
+      {min: 0, title: "Тут є що з'ясувати", text: "Це нормально, більшість не знає цих правил. Допоможемо розібратись спокійно."}
+    ]
+  }
+];
+/* ================ кінець конструктора ================ */
+
+var app = document.getElementById("app");
+function el(h){app.innerHTML=h}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+function home(){
+  var h='<h1>Короткі тести</h1><p>Обери тест, дізнайся більше про себе й свою ситуацію.</p><div class="list">';
+  TESTS.forEach(function(t,i){h+='<button class="opt" data-i="'+i+'">'+esc(t.title)+'</button>'});
+  el(h+'</div><p class="note">Матеріали мають інформаційний характер і не є юридичною консультацією. Конфіденційно.</p>');
+  app.querySelectorAll("[data-i]").forEach(function(b){b.onclick=function(){start(+b.dataset.i)}});
+}
+function start(i){
+  var t=TESTS[i];
+  el('<h1>'+esc(t.title)+'</h1><p>'+esc(t.intro)+'</p><button class="btn" id="go">Почати</button> <button class="btn ghost" id="back">Назад</button>');
+  document.getElementById("go").onclick=function(){ask(t,0,0)};
+  document.getElementById("back").onclick=home;
+}
+function ask(t,n,score){
+  var q=t.questions[n], pct=Math.round(n/t.questions.length*100);
+  var h='<div class="bar"><i style="width:'+pct+'%"></i></div><div class="meta">Питання '+(n+1)+' з '+t.questions.length+'</div><h2>'+esc(q.q)+'</h2><div id="opts">';
+  var opts=t.type==="score"?q.a:q.a.map(function(x){return [x]});
+  opts.forEach(function(o,i){h+='<button class="opt" data-i="'+i+'">'+esc(o[0])+'</button>'});
+  el(h+'</div><div id="fb"></div>');
+  app.querySelectorAll("#opts .opt").forEach(function(b){
+    b.onclick=function(){
+      var i=+b.dataset.i;
+      if(t.type==="score"){next(t,n,score+q.a[i][1]);return}
+      var ok=i===q.correct, all=app.querySelectorAll("#opts .opt");
+      all.forEach(function(x){x.disabled=true;x.style.cursor="default"});
+      all[q.correct].classList.add("ok"); if(!ok) b.classList.add("bad");
+      document.getElementById("fb").innerHTML='<div class="explain"><b>'+(ok?"Так!":"Не зовсім.")+'</b> '+esc(q.why)+'</div><button class="btn" id="nx">Далі</button>';
+      document.getElementById("nx").onclick=function(){next(t,n,score+(ok?1:0))};
+    };
+  });
+}
+function next(t,n,score){ if(n+1<t.questions.length) ask(t,n+1,score); else finish(t,score) }
+function finish(t,score){
+  var max=t.type==="score"?t.questions.length*2:t.questions.length;
+  var r=t.results.filter(function(x){return score>=x.min})[0];
+  el('<div class="meta">Твій результат</div><div class="score">'+score+' / '+max+'</div><h2>'+esc(r.title)+'</h2><p>'+esc(r.text)+'</p>'+
+  '<a class="btn" href="'+SITE_LINK+'">Записатися на конфіденційну консультацію</a> <button class="btn ghost" id="again">Інші тести</button>'+
+  '<div style="margin-top:34px"><p><b>Хочеш, щоб ми зв\'язалися з тобою?</b> Залиш контакт, і ми напишемо.</p>'+
+  '<form id="lf"><input type="hidden" name="access_key" value="'+WEB3FORMS_KEY+'"><input type="hidden" name="subject" value="Заявка з тесту Вектор">'+
+  '<input type="hidden" name="Тест" value="'+esc(t.title)+'"><input type="hidden" name="Результат" value="'+score+'/'+max+' — '+esc(r.title)+'">'+
+  '<input name="Ім\'я" placeholder="Ім\'я" required><input name="Телефон" type="tel" placeholder="Телефон" required>'+
+  '<button class="btn" type="submit">Надіслати</button><p id="st" class="note"></p></form></div>'+
+  '<p class="note">Тест не є діагнозом чи юридичною консультацією. Надсилаючи контакт, ти погоджуєшся на обробку даних для зв\'язку.</p>');
+  document.getElementById("again").onclick=home;
+  document.getElementById("lf").onsubmit=function(e){
+    e.preventDefault(); var f=e.target, st=document.getElementById("st");
+    st.textContent="Надсилаємо…";
+    fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Accept":"application/json"},body:new FormData(f)})
+      .then(function(r){return r.json()}).then(function(d){st.textContent=d.success?"Дякуємо! Ми зв'яжемось з тобою.":"Не вдалося надіслати. Спробуй пізніше.";if(d.success)f.reset()})
+      .catch(function(){st.textContent="Помилка з'єднання."});
+  };
+}
+home();
+</script>
+</body>
+</html>
